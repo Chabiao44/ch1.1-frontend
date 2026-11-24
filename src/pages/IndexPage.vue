@@ -21,7 +21,7 @@
       </q-card-section>
     </q-card>
 
-    <q-card>
+    <q-card class="q-mb-md">
       <q-card-section>
         <div class="text-h6">Docker Concepts (สรุปสั้น ๆ)</div>
         <q-list bordered separator class="q-mt-sm">
@@ -29,6 +29,24 @@
             <q-item-section>
               <q-item-label>{{ item.title }}</q-item-label>
               <q-item-label caption>{{ item.detail }}</q-item-label>
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </q-card-section>
+    </q-card>
+
+    <!-- Docker Quick Reference Card ตามที่โจทย์การบ้านกำหนด -->
+    <q-card>
+      <q-card-section>
+        <div class="text-h6">Docker Quick Reference</div>
+        <q-list bordered separator class="q-mt-sm">
+          <q-item v-for="(item, index) in dockerCommands" :key="index">
+            <q-item-section avatar>
+              <q-badge color="primary">{{ index + 1 }}</q-badge>
+            </q-item-section>
+            <q-item-section>
+              <q-item-label class="text-weight-bold">{{ item.command }}</q-item-label>
+              <q-item-label caption>{{ item.description }}</q-item-label>
             </q-item-section>
           </q-item>
         </q-list>
@@ -77,6 +95,33 @@ const dockerItems = [
   {
     title: 'Network',
     detail: 'ให้บริการใน Docker ติดต่อกันได้ เช่น Nginx ส่งต่อคำขอไปยัง Express',
+  },
+]
+
+const dockerCommands = [
+  {
+    command: 'docker build -t <image-name> <path>',
+    description: 'ใช้เมื่อต้องการสร้าง Docker Image จาก Dockerfile (เช่น หลังเขียนโค้ดเสร็จแล้วต้องการแพ็กแอปพลิเคชัน)',
+  },
+  {
+    command: 'docker run -d -p <host-port>:<container-port> --name <name> <image>',
+    description: 'ใช้เมื่อต้องการสร้างและรัน Container ในพื้นหลัง (Background Mode) พร้อมกำหนดชื่อและเชื่อมโยงพอร์ตเข้ากับเครื่อง Host',
+  },
+  {
+    command: 'docker ps',
+    description: 'ใช้เมื่อต้องการตรวจสอบรายการ Container ที่กำลังทำงานอยู่ ดูสถานะและพอร์ตที่เปิดใช้งาน',
+  },
+  {
+    command: 'docker stop <container-name> && docker rm <container-name>',
+    description: 'ใช้เมื่อต้องการหยุดการทำงานของ Container และลบ Container นั้นออกจากเครื่องเพื่อคืนพอร์ตและทรัพยากร',
+  },
+  {
+    command: 'docker compose up -d --build',
+    description: 'ใช้เมื่อต้องการสั่ง build image และเริ่มรันบริการทั้งหมดที่กำหนดไว้ในไฟล์ docker-compose.yml พร้อมกันในโหมด Background',
+  },
+  {
+    command: 'docker compose down',
+    description: 'ใช้เมื่อต้องการหยุดและลบ Container รวมถึง Network ทั้งหมดที่สร้างจาก docker-compose.yml เพื่อคืนทรัพยากร',
   },
 ]
 </script>
